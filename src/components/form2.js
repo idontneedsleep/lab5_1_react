@@ -1,12 +1,13 @@
-/*import { useForm } from "react-hook-form";
-import * as yup from "yup";*/
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 
 export function Form2(props) {
-    /*const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    /*cot schema = yup.object().shape({
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const schema = yup.object().shape({
         email: yup.string().email().required(),
-    });*/
+    });
         const cities = [
             {
                 id : 1,
@@ -47,8 +48,6 @@ export function Form2(props) {
                 text : 'Палети',
             },
         ]
-        /*this.handleInput=this.handleInput.bind(this);
-        this.handleOnSubmit=this.handleOnSubmit.bind(this);*/
 
     function handleInput (event)
     {
@@ -128,6 +127,7 @@ export function Form2(props) {
                         </div>
                         <div>СМ</div>
                     </div>
+                    <div>Додати місце</div>
                 </div>
                 <hr/>
                 <div className="container">
@@ -148,7 +148,7 @@ export function Form2(props) {
                 </div>
                 <div className="buttons">
                     <input type="submit" value="Розрахувати вартість"/>
-                    <input type="reset" value="reset"/>
+                    <input type="reset" value="Очистити"/>
                 </div>
             </form>
         );
