@@ -64,7 +64,6 @@ export function Form2(props) {
             <form onSubmit={handleOnSubmit}>
                 <div className="container">
                     <div className="label_main"><label>Маршрут</label></div>
-                    <div className="container">
                         <div className="container1">
                             <div><label>Місто-відправник</label></div>
                             <div><select name="citySender" className="city_input">
@@ -83,7 +82,6 @@ export function Form2(props) {
                                 )}
                             </select></div>
                         </div>
-                    </div>
                 </div>
                 <hr/>
                 <div className="container">
@@ -133,11 +131,11 @@ export function Form2(props) {
                 <div className="container">
                     <div className="label_main"><label>Послуга "Пакування"</label></div>
                     <input type="checkbox"/>
-                    <a>Тарифи пакування</a>
+                    <a href="https://novaposhta.ua/uploads/misc/doc/Dodatkovi_poslygi.pdf">Тарифи пакування</a>
                 </div>
                 <div className="container">
                     <div className="label_main"><label>Послуга "Підйом на поверх"</label></div>
-                    <input type="text" name="floorAmount"/>
+                    <input type="text" name="floorAmount" className="input_floor"/>
                     <div>кількість поверхів</div>
                     <div><label>Ліфт</label></div>
                     <input type="checkbox"/>

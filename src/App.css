@@ -73,6 +73,7 @@ form {
   flex-direction: row;
   align-items: end;
   margin-top: 5px;
+  margin-bottom: 20px;
  }
 
 .label_main {
@@ -82,6 +83,15 @@ form {
 
 .container1 label {
   font-size: 11px;
+}
+
+.input_floor {
+  width: 65px;
+  margin-right: 10px;
+}
+
+.input_floor + div, .input_floor + div + div {
+  margin-right: 10px;
 }
 
 input[type="text"], input[type="number"], select {
@@ -107,7 +117,8 @@ input[type='submit'] {
   padding: 8px 20px;
   font-size: 16px;
   color: #343434;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, .5), inset 0 0px 0px white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .5), inset 0 0 0 white;
+  cursor: pointer;
 }
 
 input[type='reset'] {
@@ -123,6 +134,25 @@ input:invalid {
   margin: -1px;
   border: 2px solid #f35f57;
   border-radius: 2px
+}
+
+a {
+  text-decoration: none;
+  border-color: #d7d7d7;
+  outline: none;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-size: 16px;
+  color: #343434;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .5), inset 0 0 0 white;
+  cursor: pointer;
+}
+
+input[type='submit']:hover, a:hover {
+  border-color: transparent;
+  color: #fff;
+  background: #ff5b52;
+  background: linear-gradient(to bottom, #ff5b52 0%,#f23d33 100%);
 }
 
 hr {
