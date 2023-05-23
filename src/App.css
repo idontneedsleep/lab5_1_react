@@ -71,7 +71,7 @@ form {
 .container {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
   margin-top: 5px;
   margin-bottom: 20px;
  }
@@ -130,8 +130,7 @@ input[type='reset'] {
   cursor: pointer;
   background: transparent;
 }
-input:invalid {
-  margin: -1px;
+input:focus:invalid, input.required:invalid {
   border: 2px solid #f35f57;
   border-radius: 2px
 }
