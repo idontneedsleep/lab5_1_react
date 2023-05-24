@@ -4,9 +4,6 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import React from "react";
 
 const schema = yup.object().shape({
-    citySender: yup.string().required(),
-    cityReceiver: yup.string().required(),
-    package: yup.string().required(),
     amount: yup.number().required().positive(),
     price: yup.number().required().positive(),
     weight: yup.number().required().positive(),
@@ -16,12 +13,21 @@ const schema = yup.object().shape({
     floorAmount: yup.number().positive(),
 });
 
-export function Form2(props) {
+export function Form2() {
 
-    const {register, formState: {errors}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
-        mode: 'onChange',
+        /*mode: 'onChange',*/
     });
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
+
+    const onError = (errors) => {
+        console.log(errors);
+    };
+
     const cities = [
         {
             id: 1,
@@ -63,53 +69,42 @@ export function Form2(props) {
         },
     ];
 
-    function handleInput(event) {
-        this.setState(
-            {[event.target.name]: event.target.value}
-        );
-    }
-
-    function handleOnSubmit(event) {
-        console.log("amogus");
-        event.preventDefault();
-    }
-
     return (
-        <form onSubmit={handleOnSubmit}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
             <div className="container">
-                <div className="label_main"><label>Маршрут</label></div>
+                <div className="label_main">Маршрут</div>
                 <div className="container1">
                     <div><label>Місто-відправник</label></div>
-                    <div><select name="citySender" className="city_input" required>
+                    <div><select name="citySender" {...register("citySender")} className="city_input" required>
                         {cities.map(
-                            (item) =>
-                                <option key={item.id.toString()} value={item.id.toString()}>{item.text}</option>
+                            (item, index) =>
+                                <option key={index} value={item.id.toString()}>{item.text}</option>
                         )}
                     </select></div>
                 </div>
                 <div className="container1">
                     <div><label>Місто-одержувач</label></div>
-                    <div><select name="cityReceiver" className="city_input" required>
+                    <div><select name="cityReceiver" {...register("cityReceiver")} className="city_input" required>
                         {cities.map(
-                            (it) =>
-                                <option key={it.id.toString()} value={it.id.toString()}>{it.text}</option>
+                            (it, index) =>
+                                <option key={index} value={it.id.toString()}>{it.text}</option>
                         )}
                     </select></div>
                 </div>
             </div>
             <hr/>
             <div className="container">
-                <div className="label_main"><label>Вид відправлення</label></div>
-                <select name="package" required>
+                <div className="label_main">Вид відправлення</div>
+                <select name="package" {...register("package")} required>
                     {packages.map(
-                        (item) =>
-                            <option key={item.id.toString()} value={item.id.toString()}>{item.text}</option>
+                        (item, index) =>
+                            <option key={index} value={item.id.toString()}>{item.text}</option>
                     )}
                 </select>
             </div>
             <hr/>
             <div>
-                <label>Характеристика місць</label>
+                Характеристика місць
                 <div className="container">
                     <div className="container1">
                         <div><label>Кількість</label></div>
@@ -161,20 +156,20 @@ export function Form2(props) {
             </div>
             <hr/>
             <div className="container">
-                <div className="label_main"><label>Послуга "Пакування"</label></div>
-                <input type="checkbox"/>
+                <div className="label_main">Послуга "Пакування"</div>
+                <input type="checkbox" name="checkPack"/>
                 <a href="https://novaposhta.ua/uploads/misc/doc/Dodatkovi_poslygi.pdf">Тарифи пакування</a>
             </div>
             <div className="container">
-                <div className="label_main"><label>Послуга "Підйом на поверх"</label></div>
+                <div className="label_main">Послуга "Підйом на поверх"</div>
                 <input {...register("floorAmount")} type="text" name="floorAmount" className="input_floor"/>
                 <div>кількість поверхів</div>
-                <div><label>Ліфт</label></div>
-                <input type="checkbox"/>
+                <div>Ліфт</div>
+                <input type="checkbox" name="checkLift"/>
             </div>
             <div className="container">
-                <div className="label_main"><label>Послуга "Зворотна доставка"</label></div>
-                <input type="checkbox"/>
+                <div className="label_main">Послуга "Зворотна доставка"</div>
+                <input type="checkbox" name="checkBack"/>
             </div>
             <div className="buttons">
                 <input type="submit" value="Розрахувати вартість"/>
