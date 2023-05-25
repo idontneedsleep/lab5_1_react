@@ -16,6 +16,14 @@ export function Form2() {
 
     const {register, control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
+        defaultValues: {
+            places: [{ amount: '',
+                price: '',
+                weight: '',
+                length: '',
+                width: '',
+                height: '', }]
+        }
     });
     const { fields, remove, append } = useFieldArray({
         control,
@@ -124,7 +132,7 @@ export function Form2() {
             <hr/>
             <div>
                 Характеристика місць
-                {fields.map(({ id }, index) => (
+                {fields.map(( id , index) => (
                 <div className="container" key={id}>
                     <div className="container1">
                         <div><label>Кількість</label></div>
@@ -171,8 +179,11 @@ export function Form2() {
                         </div>
                     </div>
                     <div>СМ</div>
+                    {fields.length !== 1 &&
+                    <button type="button" onClick={() => remove({index})}>x</button>}
                 </div>))}
-                <button type="button" onClick={() => append({})}>Додати місце</button>
+                {fields.length < 2 &&
+                <button type="button" onClick={() => append({})}>Додати місце</button>}
             </div>
             <hr/>
             <div className="container">
