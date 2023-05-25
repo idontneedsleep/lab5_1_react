@@ -85,6 +85,22 @@ form {
   font-size: 11px;
 }
 
+.container2 {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  margin-left: 300px;
+}
+
+.container2 * {
+  margin-right: 6px;
+}
+
+.container2 input[type="number"] {
+}
+
 .input_floor {
   width: 65px;
   margin-right: 10px;
@@ -177,3 +193,7 @@ hr {
   padding: 10px 0;
 }
 
+.type_pack {
+  width: 180px;
+  word-break: break-word;
+}
