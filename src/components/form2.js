@@ -1,4 +1,4 @@
-import {useForm} from "react-hook-form";
+import {useFieldArray, useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import React, {useState, useEffect} from "react";
@@ -14,8 +14,12 @@ const schema = yup.object().shape({
 
 export function Form2() {
 
-    const {register, watch, handleSubmit, formState: {errors}} = useForm({
+    const {register, control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
+    });
+    const { fields, remove, append } = useFieldArray({
+        control,
+        name: "places"
     });
 
     const cities = [
@@ -120,7 +124,8 @@ export function Form2() {
             <hr/>
             <div>
                 Характеристика місць
-                <div className="container">
+                {fields.map(({ id }, index) => (
+                <div className="container" key={id}>
                     <div className="container1">
                         <div><label>Кількість</label></div>
                         <div>
@@ -166,8 +171,8 @@ export function Form2() {
                         </div>
                     </div>
                     <div>СМ</div>
-                </div>
-                <div>Додати місце</div>
+                </div>))}
+                <button type="button" onClick={() => append({})}>Додати місце</button>
             </div>
             <hr/>
             <div className="container">

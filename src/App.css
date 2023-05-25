@@ -130,6 +130,15 @@ input[type='reset'] {
   cursor: pointer;
   background: transparent;
 }
+
+button {
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid #323232;
+  font-size: 16px;
+  background: transparent;
+}
+
 input:focus:invalid, input.required:invalid {
   border: 2px solid #f35f57;
   border-radius: 2px
