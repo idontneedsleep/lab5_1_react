@@ -1,7 +1,7 @@
 import {useFieldArray, useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 
 const schema = yup.object().shape({
     amount: yup.number().positive().required(),
@@ -17,12 +17,7 @@ export function Form2() {
     const {register, control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            places: [{ amount: '',
-                price: '',
-                weight: '',
-                length: '',
-                width: '',
-                height: '', }]
+            places: [{ amount: '', price: '', weight: '', length: '', width: '', height: '', }]
         }
     });
     const { fields, remove, append } = useFieldArray({
@@ -285,13 +280,11 @@ export function Form2() {
     const [showBack, setShowBack] = useState(false);
     const handleChange = ()  => {
         setShowBack(showBack => !showBack);
-        console.log(showBack);
     }
 
     const [showType, setShowType] = useState(false);
     const handleChange2 = ()  => {
         setShowType(showType => !showType);
-        console.log(showType);
     }
 
     return (
@@ -335,14 +328,14 @@ export function Form2() {
                     <div className="container1">
                         <div><label>Кількість</label></div>
                         <div>
-                            <input {...register("amount")} type="number" className="places" name="amount" required/>
+                            <input {...register(`places.${index}.amount`)} type="number" className="places" name="amount" required min="1" max="999"/>
                             <p>{errors.amount?.message}</p>
                         </div>
                     </div>
                     <div className="container1">
                         <div className="places1"><label>Оголошена вартість</label></div>
                         <div>
-                            <input {...register("price")} type="text" className="places" name="price" required/>
+                            <input {...register(`places.${index}.price`)} type="text" className="places" name="price" required/>
                             <p>{errors.price?.message}</p>
                         </div>
                     </div>
@@ -350,7 +343,7 @@ export function Form2() {
                     <div className="container1">
                         <div><label>Вага</label></div>
                         <div>
-                            <input {...register("weight")} type="text" className="places" name="weight" required/>
+                            <input {...register(`places.${index}.weight`)} type="text" className="places" name="weight" required/>
                             <p>{errors.weight?.message}</p>
                         </div>
                     </div>
@@ -358,30 +351,30 @@ export function Form2() {
                     <div className="container1">
                         <div><label>Довжина</label></div>
                         <div>
-                            <input {...register("length")} type="text" className="places" name="length" required/>
+                            <input {...register(`places.${index}.length`)} type="text" className="places" name="length" required/>
                             <p>{errors.length?.message}</p>
                         </div>
                     </div>
                     <div className="container1">
                         <div><label>Ширина</label></div>
                         <div>
-                            <input {...register("width")} type="text" className="places" name="width" required/>
+                            <input {...register(`places.${index}.width`)} type="text" className="places" name="width" required/>
                             <p>{errors.width?.message}</p>
                         </div>
                     </div>
                     <div className="container1">
                         <div><label>Висота</label></div>
                         <div>
-                            <input {...register("height")} type="text" className="places" name="height" required/>
+                            <input {...register(`places.${index}.height`)} type="text" className="places" name="height" required/>
                             <p>{errors.height?.message}</p>
                         </div>
                     </div>
                     <div>СМ</div>
                     {fields.length !== 1 &&
-                    <button type="button" onClick={() => remove({index})}>x</button>}
+                    <button type="button" onClick={() => remove(index)}>x</button>}
                 </div>))}
                 {fields.length < 2 &&
-                <button type="button" onClick={() => append({})}>Додати місце</button>}
+                <button type="button" onClick={() => append({ amount: '', price: '', weight: '', length: '', width: '', height: '' })}>Додати місце</button>}
             </div>
             <hr/>
             <div className="container">
@@ -403,8 +396,7 @@ export function Form2() {
                 <div className="container1">
                     <div><label>Кількість</label></div>
                     <div>
-                        <input {...register("amount")} type="number" className="places" name="amount" required/>
-                        <p>{errors.amount?.message}</p>
+                        <input {...register(`amount`)} type="number" className="places" name="amount" min="1" max="999" disabled/>
                     </div>
                 </div>
             </div>}
