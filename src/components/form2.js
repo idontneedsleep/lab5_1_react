@@ -1,32 +1,22 @@
 import {useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 const schema = yup.object().shape({
-    amount: yup.number().required().positive(),
-    price: yup.number().required().positive(),
-    weight: yup.number().required().positive(),
-    length: yup.number().required().positive(),
-    width: yup.number().required().positive(),
+    amount: yup.number().positive().required(),
+    price: yup.number().positive().required(),
+    weight: yup.number().positive().required(),
+    length: yup.number().positive().required(),
+    width: yup.number().positive().required(),
     height: yup.number().positive().required(),
-    floorAmount: yup.number().positive(),
 });
 
 export function Form2() {
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
+    const {register, watch, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
-        /*mode: 'onChange',*/
     });
-
-    const onSubmit = (data) => {
-        console.log(data);
-    };
-
-    const onError = (errors) => {
-        console.log(errors);
-    };
 
     const cities = [
         {
@@ -68,6 +58,31 @@ export function Form2() {
             text: 'Палети',
         },
     ];
+    const back = [
+        {
+            id: 1,
+            text: 'Документи',
+        },
+        {
+            id: 2,
+            text: 'Грошовий переказ',
+        },
+    ];
+
+    const onSubmit = (data) => {
+        console.log(data);
+    };
+    const onError = (errors) => {
+        console.log(errors);
+    };
+
+    const [showBack, setShowBack] = useState(false);
+
+    const handleChange = ()  => {
+        setShowBack(showBack => !showBack);
+        console.log(showBack);
+    }
+    useEffect(() => {console.log(showBack);}, [showBack]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -157,7 +172,7 @@ export function Form2() {
             <hr/>
             <div className="container">
                 <div className="label_main">Послуга "Пакування"</div>
-                <input type="checkbox" name="checkPack"/>
+                <input type="checkbox" name="checkPack" {...register("checkPack")}/>
                 <a href="https://novaposhta.ua/uploads/misc/doc/Dodatkovi_poslygi.pdf">Тарифи пакування</a>
             </div>
             <div className="container">
@@ -165,12 +180,22 @@ export function Form2() {
                 <input {...register("floorAmount")} type="text" name="floorAmount" className="input_floor"/>
                 <div>кількість поверхів</div>
                 <div>Ліфт</div>
-                <input type="checkbox" name="checkLift"/>
+                <input type="checkbox" name="checkLift" {...register("checkLift")}/>
             </div>
             <div className="container">
                 <div className="label_main">Послуга "Зворотна доставка"</div>
-                <input type="checkbox" name="checkBack"/>
+                <input type="checkbox" name="checkBack" {...register("checkBack")} onChange={handleChange}/>
             </div>
+            {showBack &&
+                <div className="container">
+                    <div className="label_main">Вид зворотної доставки</div>
+                    <select name="back" {...register("back")}>
+                        {back.map(
+                            (it, index) =>
+                                <option key={index} value={it.id.toString()}>{it.text}</option>
+                        )}
+                    </select>
+                </div>}
             <div className="buttons">
                 <input type="submit" value="Розрахувати вартість"/>
                 <input type="reset" value="Очистити"/>
